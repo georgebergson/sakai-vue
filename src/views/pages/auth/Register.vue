@@ -2,8 +2,10 @@
 import FloatingConfigurator from '@/components/FloatingConfigurator.vue';
 import { ref } from 'vue';
 
+const name = ref('');
 const email = ref('');
 const password = ref('');
+const confirmPassword = ref('');
 const checked = ref(false);
 </script>
 
@@ -32,22 +34,27 @@ const checked = ref(false);
                             </g>
                         </svg>
                         <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">SISTEMAS BLUE</div>
-                        <span class="text-muted-color font-medium">acesse sua conta</span>
+                        <span class="text-muted-color font-medium">crie sua conta</span>
                     </div>
 
-                    <div>
-                        <InputText id="email1" type="text" placeholder="Email" class="w-full md:w-[30rem] mb-4 h-12" v-model="email" />
+                    <div class="space-x-5">
+                        <InputText id="name1" type="text" placeholder="Nome" class="w-full md:w-[30rem] mb-4 h-12" v-model="name" />
 
-                        <Password id="password1" v-model="password" placeholder="Senha" :toggleMask="true" class="mb-4 h-12" fluid :feedback="false"></Password>
-
-                        <div class="flex items-center justify-between mt-2 mb-10 gap-8">
-                            <div class="flex items-center">
-                                <Checkbox v-model="checked" id="rememberme1" binary class="mr-2"></Checkbox>
-                                <label for="rememberme1">Lembrar de mim</label>
-                            </div>
-                            <span class="font-medium no-underline ml-2 text-right cursor-pointer text-primary">Esqueceu a senha?</span>
+                        <InputText id="email1" type="email" placeholder="Email" class="w-full md:w-[30rem] mb-4 h-12" v-model="email" />
+                    </div>
+                    <div class="flex space-x-5 w-full">
+                        <Password id="password1" v-model="password" placeholder="Senha" :toggleMask="true" class="w-full mb-4 h-12" fluid :feedback="false"></Password>
+                        <Password id="confirmPassword1" v-model="confirmPassword" placeholder="Confirmar Senha" :toggleMask="true" class="w-full mb-4 h-12" fluid :feedback="false"></Password>
+                    </div>
+                    <div class="flex items-center justify-between mt-2 mb-10 gap-8">
+                        <div class="flex items-center">
+                            <Checkbox v-model="checked" id="terms1" binary class="mr-2"></Checkbox>
+                            <label for="terms1" class="text-sm">Aceito os termos e condições</label>
                         </div>
-                        <Button label="ACESSAR O SISTEMA" class="w-full h-12" as="router-link" to="/"></Button>
+                    </div>
+                    <Button label="CRIAR CONTA" class="w-full h-12" as="router-link" to="/"></Button>
+                    <div class="text-center mt-6">
+                        <span class="text-muted-color text-sm">Já possui conta? <router-link to="/login" class="font-medium no-underline cursor-pointer text-primary hover:underline">Faça login</router-link></span>
                     </div>
                 </div>
             </div>
