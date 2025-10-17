@@ -128,6 +128,11 @@ const router = createRouter({
             component: () => import('@/views/pages/auth/Register.vue')
         },
         {
+            path: '/planos',
+            name: 'planos',
+            component: () => import('@/views/pages/auth/Plans.vue')
+        },
+        {
             path: '/auth/access',
             name: 'accessDenied',
             component: () => import('@/views/pages/auth/Access.vue')
