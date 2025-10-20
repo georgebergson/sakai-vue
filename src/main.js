@@ -7,6 +7,11 @@ import { definePreset } from '@primeuix/themes';
 import PrimeVue from 'primevue/config';
 import ConfirmationService from 'primevue/confirmationservice';
 import ToastService from 'primevue/toastservice';
+import Steps from 'primevue/steps';
+import InputText from 'primevue/inputtext';
+import Password from 'primevue/password';
+import Checkbox from 'primevue/checkbox';
+import Button from 'primevue/button';
 
 import '@/assets/styles.scss';
 
@@ -41,5 +46,11 @@ app.use(PrimeVue, {
 });
 app.use(ToastService);
 app.use(ConfirmationService);
+
+app.component('Steps', Steps);
+app.component('InputText', InputText);
+app.component('Password', Password);
+app.component('Checkbox', Checkbox);
+app.component('Button', Button);
 
 app.mount('#app');
