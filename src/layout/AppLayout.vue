@@ -1,4 +1,5 @@
 <script setup>
+import DrawerModal from '@/components/DrawerModal.vue';
 import { useLayout } from '@/layout/composables/layout';
 import { computed, ref, watch } from 'vue';
 import AppFooter from './AppFooter.vue';
@@ -60,6 +61,7 @@ function isOutsideClicked(event) {
         <app-topbar></app-topbar>
         <app-sidebar></app-sidebar>
         <div class="layout-main-container">
+            <DrawerModal />
             <div class="layout-main">
                 <router-view></router-view>
             </div>

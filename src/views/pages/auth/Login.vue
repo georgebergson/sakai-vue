@@ -1,10 +1,26 @@
 <script setup>
 import FloatingConfigurator from '@/components/FloatingConfigurator.vue';
-import { ref } from 'vue';
+import { getCurrentInstance, ref } from 'vue';
+const { proxy } = getCurrentInstance();
 
 const email = ref('');
 const password = ref('');
 const checked = ref(false);
+
+async function buscarTudo() {
+    const id1 = proxy.$loader.show('Carregando usuários...');
+    const id2 = proxy.$loader.show('Carregando produtos...');
+    const id3 = proxy.$loader.show('Carregando relatórios...');
+
+    try {
+        await Promise.all([new Promise((r) => setTimeout(r, 2000)), new Promise((r) => setTimeout(r, 3500)), new Promise((r) => setTimeout(r, 1500))]);
+    } finally {
+        proxy.$loader.hide(id1);
+        proxy.$loader.hide(id2);
+        proxy.$loader.hide(id3);
+    }
+}
+buscarTudo();
 </script>
 
 <template>

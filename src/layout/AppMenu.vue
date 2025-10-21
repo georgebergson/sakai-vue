@@ -1,7 +1,13 @@
 <script setup>
+import { useDrawer } from '@/store/useDrawe';
 import { ref } from 'vue';
-
 import AppMenuItem from './AppMenuItem.vue';
+
+// Importar os componentes que serão usados nos drawers
+import ProdutosComponent from '@/components/dashboard/BestSellingWidget.vue'; // exemplo
+import { default as PerfilUsuario, default as PessoasComponent } from '@/components/dashboard/RecentSalesWidget.vue'; // exemplo
+
+const { openDrawer } = useDrawer();
 
 const model = ref([
     {
@@ -10,7 +16,19 @@ const model = ref([
     },
     {
         label: 'ATALHOS',
-        items: [{ label: 'PDV', icon: 'pi pi-fw pi-id-card', to: '/uikit/formlayout' }]
+        items: [
+            {
+                label: 'PDV',
+                icon: 'pi pi-fw pi-id-card',
+                to: '/uikit/formlayout'
+            },
+            {
+                label: 'Perfil Rápido',
+                icon: 'pi pi-fw pi-user',
+                drawer: PerfilUsuario, // Usa drawer em vez de rota
+                drawerTitle: 'Perfil do Usuário'
+            }
+        ]
     },
     {
         label: 'MENU',
@@ -60,17 +78,19 @@ const model = ref([
                     {
                         label: 'Pessoas',
                         icon: 'pi pi-fw pi-users',
-                        to: '/cadastro/pessoas'
+                        drawer: PessoasComponent, // Abre no drawer
+                        drawerTitle: 'Cadastro de Pessoas'
                     },
                     {
                         label: 'Usuarios',
                         icon: 'pi pi-fw pi-user-plus',
-                        to: '/cadastro/usuarios'
+                        to: '/cadastro/usuarios' // Continua com rota normal
                     },
                     {
                         label: 'Produtos',
                         icon: 'pi pi-fw pi-barcode',
-                        to: '/cadastro/produtos'
+                        drawer: ProdutosComponent, // Abre no drawer
+                        drawerTitle: 'Cadastro de Produtos'
                     },
                     {
                         label: 'Forma de Pagamento',
