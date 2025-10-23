@@ -1,0 +1,152 @@
+<script setup>
+import { FilterMatchMode } from '@primevue/core/api';
+import { useToast } from 'primevue/usetoast';
+import { ref } from 'vue';
+
+const props = defineProps({
+    value: {
+        type: Array,
+        required: true
+    },
+    columns: {
+        type: Array,
+        required: true
+        // Formato esperado: [{ field: 'id', header: 'ID', sortable: true, style: 'width: 10%' }]
+    },
+    dataKey: {
+        type: String,
+        default: 'id'
+    },
+    title: {
+        type: String,
+        default: 'Gerenciar Registros'
+    },
+    enableCreate: {
+        type: Boolean,
+        default: true
+    },
+    enableEdit: {
+        type: Boolean,
+        default: true
+    },
+    enableDelete: {
+        type: Boolean,
+        default: true
+    },
+    enableExport: {
+        type: Boolean,
+        default: true
+    },
+    enableSelection: {
+        type: Boolean,
+        default: true
+    },
+    paginator: {
+        type: Boolean,
+        default: true
+    },
+    rows: {
+        type: Number,
+        default: 10
+    },
+    rowsPerPageOptions: {
+        type: Array,
+        default: () => [5, 10, 25]
+    }
+});
+
+const emit = defineEmits(['create', 'edit', 'delete', 'delete-selected']);
+
+const toast = useToast();
+const dt = ref();
+const selectedItems = ref();
+const filters = ref({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS }
+});
+
+function exportCSV() {
+    dt.value.exportCSV();
+}
+
+function handleCreate() {
+    emit('create');
+}
+
+function handleEdit(item) {
+    emit('edit', item);
+}
+
+function handleDelete(item) {
+    emit('delete', item);
+}
+
+function handleDeleteSelected() {
+    if (selectedItems.value && selectedItems.value.length > 0) {
+        emit('delete-selected', selectedItems.value);
+        selectedItems.value = null;
+    }
+}
+
+function getColumnBody(column) {
+    return column.body || null;
+}
+</script>
+
+<template>
+    <div>
+        <div class="card">
+            <Toolbar class="mb-6">
+                <template #start>
+                    <Button v-if="enableCreate" label="Novo" icon="pi pi-plus" severity="secondary" class="mr-2" @click="handleCreate" />
+                    <Button v-if="enableDelete && enableSelection" label="Deletar" icon="pi pi-trash" severity="secondary" @click="handleDeleteSelected" :disabled="!selectedItems || !selectedItems.length" />
+                </template>
+
+                <template #end>
+                    <Button v-if="enableExport" label="Exportar" icon="pi pi-upload" severity="secondary" @click="exportCSV" />
+                </template>
+            </Toolbar>
+
+            <DataTable
+                ref="dt"
+                v-model:selection="selectedItems"
+                :value="value"
+                :dataKey="dataKey"
+                :paginator="paginator"
+                :rows="rows"
+                :filters="filters"
+                class="p-datatable-striped"
+                responsiveLayout="scroll"
+                paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                :rowsPerPageOptions="rowsPerPageOptions"
+                :currentPageReportTemplate="`Mostrando {first} a {last} de {totalRecords} registros`"
+            >
+                <template #header>
+                    <div class="flex flex-wrap gap-2 items-center justify-between">
+                        <h4 class="m-0">{{ title }}</h4>
+                        <IconField>
+                            <InputIcon>
+                                <i class="pi pi-search" />
+                            </InputIcon>
+                            <InputText v-model="filters['global'].value" placeholder="Pesquisar..." />
+                        </IconField>
+                    </div>
+                </template>
+
+                <Column v-if="enableSelection" selectionMode="multiple" style="width: 3rem" :exportable="false" />
+
+                <Column v-for="column in columns" :key="column.field" :field="column.field" :header="column.header" :sortable="column.sortable !== false" :style="column.style">
+                    <template v-if="column.body" #body="slotProps">
+                        <component :is="column.body" :data="slotProps.data" />
+                    </template>
+                </Column>
+
+                <Column v-if="enableEdit || enableDelete" :exportable="false" header="Ações" style="min-width: 12rem">
+                    <template #body="slotProps">
+                        <Button v-if="enableEdit" icon="pi pi-pencil" outlined rounded class="mr-2" @click="handleEdit(slotProps.data)" />
+                        <Button v-if="enableDelete" icon="pi pi-trash" outlined rounded severity="danger" @click="handleDelete(slotProps.data)" />
+                    </template>
+                </Column>
+            </DataTable>
+        </div>
+    </div>
+</template>

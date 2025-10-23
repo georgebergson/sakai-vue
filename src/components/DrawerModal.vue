@@ -36,3 +36,12 @@ const drawerStyle = computed(() => {
     };
 });
 </script>
+
+<style>
+.p-drawer-content {
+    padding: 0rem !important;
+}
+.p-drawer-header {
+    padding-bottom: 0rem !important;
+}
+</style>
