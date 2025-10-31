@@ -21,7 +21,8 @@ const model = ref([
             {
                 label: 'PDV',
                 icon: 'pi pi-fw pi-id-card',
-                to: '/uikit/formlayout'
+                to: '/pdv/market',
+                target: '_blank'
             },
             {
                 label: 'Perfil Rápido',

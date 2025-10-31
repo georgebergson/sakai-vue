@@ -1,4 +1,5 @@
 import AppLayout from '@/layout/AppLayout.vue';
+import AppLayoutPDV from '@/layout/AppLayoutPDV.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
@@ -103,6 +104,17 @@ const router = createRouter({
                     path: '/documentation',
                     name: 'documentation',
                     component: () => import('@/views/pages/Documentation.vue')
+                }
+            ]
+        },
+        {
+            path: '/pdv',
+            component: AppLayoutPDV,
+            children: [
+                {
+                    path: '/pdv/market',
+                    name: 'market',
+                    component: () => import('@/views/pages/PDV/Market.vue')
                 }
             ]
         },

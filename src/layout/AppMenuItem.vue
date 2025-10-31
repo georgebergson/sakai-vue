@@ -51,6 +51,17 @@ function itemClick(event, item) {
         return;
     }
 
+    // Se o item tem target="_blank", abre em nova aba
+    if (item.target === '_blank' && item.to) {
+        event.preventDefault();
+        window.open(item.to, '_blank');
+
+        if (layoutState.staticMenuMobileActive || layoutState.overlayMenuActive) {
+            toggleMenu();
+        }
+        return;
+    }
+
     // Se o item tem drawer configurado, abre o drawer
     if (item.drawer) {
         event.preventDefault();
@@ -90,15 +101,36 @@ function checkActiveRoute(item) {
             <span class="layout-menuitem-text">{{ item.label }}</span>
         </a>
 
+        <!-- Link com target="_blank" -->
+        <a v-else-if="item.to && item.target === '_blank' && item.visible !== false" href="#" @click="itemClick($event, item, index)" :class="item.class" tabindex="0">
+            <i :class="item.icon" class="layout-menuitem-icon"></i>
+            <span class="layout-menuitem-text">{{ item.label }}</span>
+            <i class="pi pi-fw pi-external-link layout-menuitem-icon" style="margin-left: auto; font-size: 0.875rem"></i>
+        </a>
+
+        <!-- Link externo com URL -->
+        <a v-else-if="item.url && item.visible !== false && !item.drawer" :href="item.url" @click="itemClick($event, item, index)" :class="item.class" :target="item.target" tabindex="0">
+            <i :class="item.icon" class="layout-menuitem-icon"></i>
+            <span class="layout-menuitem-text">{{ item.label }}</span>
+            <i class="pi pi-fw pi-angle-down layout-submenu-toggler" v-if="item.items"></i>
+            <i v-if="item.target === '_blank'" class="pi pi-fw pi-external-link layout-menuitem-icon" style="margin-left: auto; font-size: 0.875rem"></i>
+        </a>
+
         <!-- Link normal sem rota e com submenu -->
-        <a v-else-if="(!item.to || item.items) && item.visible !== false && !item.drawer" :href="item.url" @click="itemClick($event, item, index)" :class="item.class" :target="item.target" tabindex="0">
+        <a v-else-if="(!item.to || item.items) && item.visible !== false && !item.drawer && !item.url" href="#" @click="itemClick($event, item, index)" :class="item.class" tabindex="0">
             <i :class="item.icon" class="layout-menuitem-icon"></i>
             <span class="layout-menuitem-text">{{ item.label }}</span>
             <i class="pi pi-fw pi-angle-down layout-submenu-toggler" v-if="item.items"></i>
         </a>
 
-        <!-- Router link -->
-        <router-link v-if="item.to && !item.items && item.visible !== false && !item.drawer" @click="itemClick($event, item, index)" :class="[item.class, { 'active-route': checkActiveRoute(item) }]" tabindex="0" :to="item.to">
+        <!-- Router link normal -->
+        <router-link
+            v-else-if="item.to && !item.items && item.visible !== false && !item.drawer && item.target !== '_blank'"
+            @click="itemClick($event, item, index)"
+            :class="[item.class, { 'active-route': checkActiveRoute(item) }]"
+            tabindex="0"
+            :to="item.to"
+        >
             <i :class="item.icon" class="layout-menuitem-icon"></i>
             <span class="layout-menuitem-text">{{ item.label }}</span>
             <i class="pi pi-fw pi-angle-down layout-submenu-toggler" v-if="item.items"></i>

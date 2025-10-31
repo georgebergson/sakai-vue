@@ -1,7 +1,7 @@
 <script setup>
 import { FilterMatchMode } from '@primevue/core/api';
 import { useToast } from 'primevue/usetoast';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 const props = defineProps({
     value: {
@@ -52,6 +52,16 @@ const props = defineProps({
     rowsPerPageOptions: {
         type: Array,
         default: () => [5, 10, 25]
+    },
+    // Novas props para controle individual de ações
+    actions: {
+        type: Object,
+        default: () => ({
+            edit: true,
+            delete: true,
+            custom: [] // Array de ações customizadas
+        })
+        // Formato custom: [{ icon: 'pi pi-eye', severity: 'info', tooltip: 'Visualizar', emit: 'view' }]
     }
 });
 
@@ -62,6 +72,11 @@ const dt = ref();
 const selectedItems = ref();
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS }
+});
+
+// Computed para verificar se deve mostrar a coluna de ações
+const shouldShowActions = computed(() => {
+    return props.actions.edit || props.actions.delete || (props.actions.custom && props.actions.custom.length > 0);
 });
 
 function exportCSV() {
@@ -87,6 +102,10 @@ function handleDeleteSelected() {
     }
 }
 
+function handleCustomAction(action, item) {
+    emit(action.emit, item);
+}
+
 function getColumnBody(column) {
     return column.body || null;
 }
@@ -97,12 +116,11 @@ function getColumnBody(column) {
         <div class="card">
             <Toolbar class="mb-6">
                 <template #start>
-                    <Button v-if="enableCreate" label="Novo" icon="pi pi-plus" severity="secondary" class="mr-2" @click="handleCreate" />
-                    <Button v-if="enableDelete && enableSelection" label="Deletar" icon="pi pi-trash" severity="secondary" @click="handleDeleteSelected" :disabled="!selectedItems || !selectedItems.length" />
+                    <Button v-if="enableCreate" label="Novo" icon="pi pi-plus" severity="primary" class="mr-2" @click="handleCreate" />
                 </template>
 
                 <template #end>
-                    <Button v-if="enableExport" label="Exportar" icon="pi pi-upload" severity="secondary" @click="exportCSV" />
+                    <Button v-if="enableExport" label="Exportar" icon="pi pi-upload" severity="warn" @click="exportCSV" />
                 </template>
             </Toolbar>
 
@@ -132,7 +150,7 @@ function getColumnBody(column) {
                     </div>
                 </template>
 
-                <Column v-if="enableSelection" selectionMode="multiple" style="width: 3rem" :exportable="false" />
+                <Column v-if="enableSelection" style="width: 3rem" :exportable="false" />
 
                 <Column v-for="column in columns" :key="column.field" :field="column.field" :header="column.header" :sortable="column.sortable !== false" :style="column.style">
                     <template v-if="column.body" #body="slotProps">
@@ -140,10 +158,31 @@ function getColumnBody(column) {
                     </template>
                 </Column>
 
-                <Column v-if="enableEdit || enableDelete" :exportable="false" header="Ações" style="min-width: 12rem">
+                <Column v-if="shouldShowActions" :exportable="false" style="min-width: 12rem">
+                    <template #header>
+                        <div style="text-align: center; width: 100%">Ações</div>
+                    </template>
                     <template #body="slotProps">
-                        <Button v-if="enableEdit" icon="pi pi-pencil" outlined rounded class="mr-2" @click="handleEdit(slotProps.data)" />
-                        <Button v-if="enableDelete" icon="pi pi-trash" outlined rounded severity="danger" @click="handleDelete(slotProps.data)" />
+                        <div style="text-align: center">
+                            <!-- Ações customizadas -->
+                            <Button
+                                v-for="(action, index) in actions.custom"
+                                :key="`custom-${index}`"
+                                :icon="action.icon"
+                                outlined
+                                rounded
+                                :severity="action.severity || 'secondary'"
+                                :v-tooltip="action.tooltip"
+                                class="mr-2"
+                                @click="handleCustomAction(action, slotProps.data)"
+                            />
+
+                            <!-- Ação de editar -->
+                            <Button v-if="actions.edit" icon="pi pi-pencil" outlined rounded class="mr-2" @click="handleEdit(slotProps.data)" />
+
+                            <!-- Ação de deletar -->
+                            <Button v-if="actions.delete" icon="pi pi-trash" outlined rounded severity="danger" @click="handleDelete(slotProps.data)" />
+                        </div>
                     </template>
                 </Column>
             </DataTable>
