@@ -2,12 +2,14 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 
+import GlobalDataTable from '@/components/dashboard/GlobalDataTable.vue';
 import { definePreset } from '@primeuix/themes';
 import Aura from '@primeuix/themes/aura';
 import Button from 'primevue/button';
 import Checkbox from 'primevue/checkbox';
 import PrimeVue from 'primevue/config';
 import ConfirmationService from 'primevue/confirmationservice';
+import DataTable from 'primevue/datatable';
 import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
 import Steps from 'primevue/steps';
@@ -56,5 +58,7 @@ app.component('Password', Password);
 app.component('Checkbox', Checkbox);
 app.component('Button', Button);
 app.component('ProgressSpinner', ProgressSpinner);
+app.component('DataTable', DataTable);
+app.component('GlobalDataTable', GlobalDataTable);
 
 app.mount('#app');

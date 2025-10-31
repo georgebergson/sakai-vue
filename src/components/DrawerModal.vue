@@ -23,15 +23,3 @@ const drawerStyle = computed(() => {
     };
 });
 </script>
-
-<template>
-    <!-- Seus outros drawers -->
-    <Drawer v-model:visible="visibleFull" header="Drawer" position="full">
-        <p>Lorem ipsum dolor sit amet...</p>
-    </Drawer>
-
-    <!-- Drawer Global Reutilizável -->
-    <Drawer v-model:visible="isVisible" :header="drawerTitle" position="full" :style="drawerStyle">
-        <component :is="drawerContent" v-if="drawerContent" />
-    </Drawer>
-</template>
