@@ -143,5 +143,3 @@ function checkActiveRoute(item) {
         </Transition>
     </li>
 </template>
-
-<style lang="scss" scoped></style>

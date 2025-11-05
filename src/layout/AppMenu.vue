@@ -1,5 +1,4 @@
 <script setup>
-import { useDrawer } from '@/store/useDrawe';
 import { ref } from 'vue';
 import AppMenuItem from './AppMenuItem.vue';
 
@@ -7,8 +6,6 @@ import AppMenuItem from './AppMenuItem.vue';
 import ProdutosComponent from '@/components/dashboard/BestSellingWidget.vue'; // exemplo
 import { default as PerfilUsuario, default as PessoasComponent } from '@/components/dashboard/RecentSalesWidget.vue'; // exemplo
 import TipoDeRecebimento from '@/views/pages/cadastro/TipoDeRecebimento.vue';
-
-const { openDrawer } = useDrawer();
 
 const model = ref([
     {

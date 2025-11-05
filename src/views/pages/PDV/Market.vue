@@ -46,7 +46,7 @@ import AppTopbarPDV from '@/layout/AppTopbarPDV.vue';
             <!-- Coluna direita -->
             <section class="w-full bg-red-400 p-4 overflow-auto">
                 <h2 class="text-lg font-medium mb-2">Coluna Direita</h2>
-                <p>Conteúdo aqui...</p>
+                <p>Conteúdo aqui....</p>
             </section>
         </div>
     </main>
