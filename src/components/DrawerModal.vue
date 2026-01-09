@@ -5,7 +5,7 @@ import { computed, ref } from 'vue';
 const visibleFull = ref(false);
 
 // Drawer global
-const { isVisible, drawerTitle, drawerContent } = useDrawer();
+const { isVisible, drawerTitle, drawerContent, closeDrawer } = useDrawer();
 
 const isMobile = ref(window.innerWidth < 768);
 window.addEventListener('resize', () => {
@@ -22,4 +22,16 @@ const drawerStyle = computed(() => {
         borderRadius: '10px !important'
     };
 });
+
+const handleClose = () => {
+    closeDrawer();
+};
 </script>
+
+<template>
+    <Dialog v-model:visible="isVisible" modal :header="drawerTitle" :style="drawerStyle" @update:visible="handleClose">
+        <div class="p-4">
+            <component :is="drawerContent" />
+        </div>
+    </Dialog>
+</template>

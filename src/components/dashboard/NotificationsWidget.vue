@@ -12,7 +12,7 @@ const items = ref([
 <template>
     <div class="card">
         <div class="flex items-center justify-between mb-6">
-            <div class="font-semibold text-xl">Notifications</div>
+            <div class="font-semibold text-xl">Melhores Clientes</div>
             <div>
                 <Button icon="pi pi-ellipsis-v" class="p-button-text p-button-plain p-button-rounded" @click="$refs.menu.toggle($event)"></Button>
                 <Menu ref="menu" popup :model="items" class="!min-w-40"></Menu>
@@ -38,7 +38,7 @@ const items = ref([
             </li>
         </ul>
 
-        <span class="block text-muted-color font-medium mb-4">YESTERDAY</span>
+        <!-- <span class="block text-muted-color font-medium mb-4">YESTERDAY</span>
         <ul class="p-0 m-0 list-none mb-6">
             <li class="flex items-center py-2 border-b border-surface">
                 <div class="w-12 h-12 flex items-center justify-center bg-blue-100 dark:bg-blue-400/10 rounded-full mr-4 shrink-0">
@@ -58,7 +58,7 @@ const items = ref([
                     <span class="text-surface-700 dark:text-surface-100">has posted a new questions about your product.</span>
                 </span>
             </li>
-        </ul>
+        </ul> -->
         <span class="block text-muted-color font-medium mb-4">LAST WEEK</span>
         <ul class="p-0 m-0 list-none">
             <li class="flex items-center py-2 border-b border-surface">
