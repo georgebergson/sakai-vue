@@ -18,7 +18,8 @@ const drawerStyle = computed(() => {
     }
     return {
         width: '50vw !important',
-        height: '80vh !important',
+        height: 'auto !important',
+        maxwidth: '600px !important',
         borderRadius: '10px !important'
     };
 });
@@ -35,3 +36,11 @@ const handleClose = () => {
         </div>
     </Dialog>
 </template>
+
+<style>
+.p-dialog-title {
+    margin: 0 auto;
+    font-weight: 600;
+    font-size: 1.6em;
+}
+</style>

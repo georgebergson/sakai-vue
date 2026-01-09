@@ -4,7 +4,8 @@ import AppMenuItem from './AppMenuItem.vue';
 
 // Importar os componentes que serão usados nos drawers
 import ProdutosComponent from '@/components/dashboard/BestSellingWidget.vue'; // exemplo
-import { default as PerfilUsuario, default as PessoasComponent } from '@/components/dashboard/RecentSalesWidget.vue'; // exemplo
+import { default as PerfilUsuario } from '@/components/dashboard/RecentSalesWidget.vue'; // exemplo
+import Pessoas from '@/views/pages/cadastro/Pessoas.vue';
 import TipoDeRecebimento from '@/views/pages/cadastro/TipoDeRecebimento.vue';
 
 const model = ref([
@@ -77,7 +78,7 @@ const model = ref([
                     {
                         label: 'Pessoas',
                         icon: 'pi pi-fw pi-users',
-                        drawer: PessoasComponent, // Abre no drawer
+                        drawer: Pessoas, // Abre no drawer
                         drawerTitle: 'Cadastro de Pessoas'
                     },
                     {

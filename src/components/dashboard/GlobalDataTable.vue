@@ -189,3 +189,9 @@ function getColumnBody(column) {
         </div>
     </div>
 </template>
+
+<style scoped>
+.card {
+    padding: 0 !important;
+}
+</style>
