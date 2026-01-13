@@ -17,7 +17,7 @@ const drawerStyle = computed(() => {
         return {};
     }
     return {
-        width: '50vw !important',
+        width: '80vw !important',
         height: 'auto !important',
         maxwidth: '600px !important',
         borderRadius: '10px !important'

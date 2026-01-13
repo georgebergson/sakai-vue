@@ -68,23 +68,131 @@
                 </div>
             </TabPanel>
             <TabPanel value="1">
-                <Button icon="pi pi-arrow-left" class="mr-2 mb-2" @click="activeTab = '0'"></Button>
+                <div class="flex justify-between">
+                    <Button icon="pi pi-arrow-left" class="mr-2 mb-2" @click="activeTab = '0'"></Button>
 
-                <div class="flex flex-col mt-8">
-                    <div class="flex space-x-5">
+                    <div>
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <div class="flex items-center">
+                                <Checkbox id="cliente" name="option" value="1" v-model="checkboxValue" disabled />
+                                <label for="cliente" class="ml-2">Cliente</label>
+                            </div>
+                            <div class="flex items-center">
+                                <Checkbox id="colaborador" name="option" value="Los Angeles" v-model="checkboxValue" />
+                                <label for="colaborador" class="ml-2">Colaborador</label>
+                            </div>
+                            <div class="flex items-center">
+                                <Checkbox id="fornecedor" name="option" value="New York" v-model="checkboxValue" />
+                                <label for="fornecedor" class="ml-2">Fornecedor</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col mt-3">
+                    <div class="space-x-5">
                         <Tabs value="0">
                             <TabList>
-                                <Tab value="0">Header I</Tab>
-                                <Tab value="1">Header II</Tab>
+                                <Tab value="0">Dados Base</Tab>
+                                <Tab value="1">Endereço de Entrega</Tab>
                                 <Tab value="2">Header III</Tab>
                             </TabList>
                             <TabPanels>
                                 <TabPanel value="0">
-                                    <p class="m-0">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-                                        ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-                                        mollit anim id est laborum.
-                                    </p>
+                                    <div class="flex space-x-2 my-2">
+                                        <div class="flex flex-col w-28">
+                                            <label for="id">ID</label>
+                                            <InputText id="id" type="text" disabled />
+                                        </div>
+                                        <div class="flex flex-wrap w-1/2">
+                                            <label for="state">Tipo</label>
+                                            <Select id="state" v-model="tipoPessoa" :options="tipoPessoas" optionLabel="name" placeholder="Select One" class="w-full"></Select>
+                                        </div>
+                                        <div class="flex flex-col w-full">
+                                            <label for="cpf_cnpj">CPF</label>
+                                            <InputText id="cpf_cnpj" type="text" />
+                                        </div>
+                                        <div class="flex flex-col w-full">
+                                            <label for="insc_est">INSCRIÇÃO ESTADUAL</label>
+                                            <InputText id="insc_est" type="text" />
+                                        </div>
+                                    </div>
+                                    <div class="flex space-x-2 my-2">
+                                        <div class="flex flex-col w-full">
+                                            <label for="cpf_cnpj">RAZÃO</label>
+                                            <InputText id="cpf_cnpj" type="text" />
+                                        </div>
+                                        <div class="flex flex-col w-full">
+                                            <label for="insc_est">FANTASIA</label>
+                                            <InputText id="insc_est" type="text" />
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="flex space-x-2 my-2">
+                                        <div class="flex flex-col w-1/6">
+                                            <label for="cep">CEP</label>
+                                            <InputText id="cep" type="text" />
+                                        </div>
+                                        <div class="flex flex-col w-full">
+                                            <label for="endereco"> ENDEREÇO</label>
+                                            <InputText id="endereco" type="text" />
+                                        </div>
+                                        <div class="flex flex-col w-1/6">
+                                            <label for="numero"> NUMERO</label>
+                                            <InputText id="numero" type="text" />
+                                        </div>
+                                        <div class="flex flex-col w-full">
+                                            <label for="bairro"> BAIRRO</label>
+                                            <InputText id="bairro" type="text" />
+                                        </div>
+                                    </div>
+                                    <div class="flex space-x-2 my-2">
+                                        <div class="flex flex-col w-1/2">
+                                            <label for="cidade">CIDADE</label>
+                                            <Select id="cidade" v-model="tipoPessoa" :options="tipoPessoas" optionLabel="name" placeholder="Select One" class="w-full"></Select>
+                                        </div>
+                                        <div class="flex flex-col w-1/2">
+                                            <label for="estado"> ESTADO</label>
+                                            <Select id="estado" v-model="tipoPessoa" :options="tipoPessoas" optionLabel="name" placeholder="Select One" class="w-full"></Select>
+                                        </div>
+                                        <div class="flex flex-col w-full">
+                                            <label for="bairro"> COMPLEMENTO</label>
+                                            <InputText id="bairro" type="text" />
+                                        </div>
+                                        <div class="flex flex-col w-1/2">
+                                            <label for="status"> STATUS</label>
+                                            <Select id="status" v-model="tipoPessoa" :options="tipoPessoas" optionLabel="name" placeholder="Select One" class="w-full"></Select>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="flex space-x-2 my-2">
+                                        <div class="flex flex-col w-full">
+                                            <label for="telefone1"> TELEFONE</label>
+                                            <InputText id="telefone1" type="text" />
+                                        </div>
+                                        <div class="flex flex-col w-full">
+                                            <label for="telefone2"> TELEFONE</label>
+                                            <InputText id="telefone2" type="text" />
+                                        </div>
+                                        <div class="flex flex-col w-full">
+                                            <label for="telefone3"> TELEFONE</label>
+                                            <InputText id="telefone3" type="text" />
+                                        </div>
+                                        <div class="flex flex-col w-full">
+                                            <label for="telefone4"> TELEFONE</label>
+                                            <InputText id="telefone4" type="text" />
+                                        </div>
+                                    </div>
+                                    <div class="flex w-full space-x-2 my-2">
+                                        <div>
+                                            <label for="address">Foto</label>
+                                            <FileUpload name="demo[]" @uploader="onUpload" :multiple="true" accept="image/*" :maxFileSize="1000000" customUpload />
+                                        </div>
+                                        <div class="w-full">
+                                            <label for="address">Observação</label>
+                                            <Textarea class="w-full" id="address" rows="4" />
+                                        </div>
+                                    </div>
                                 </TabPanel>
                                 <TabPanel value="1">
                                     <p class="m-0">
@@ -120,6 +228,16 @@ const toast = useToast();
 const activeTab = ref('0');
 
 const statusServiceItem = ref({ name: 'Ativo', code: '0' });
+
+const checkboxValue = ref('1');
+
+const tipoPessoas = ref([
+    { name: 'Física', code: 1 },
+    { name: 'Jurídica', code: 2 },
+    { name: 'Outro', code: 3 }
+]);
+
+const tipoPessoa = ref({ name: 'Física', code: 1 });
 
 const tiposDeRecebimento = ref([
     { id: 1, descricao: 'Dinheiro', status: 'Ativo' },
@@ -168,7 +286,7 @@ const columns = ref([
 
 function handleCreate() {
     currentItem.value = { descricao: '', status: 'Ativo' };
-    dialogVisible.value = true;
+    dialogVisible.value = false; // ativa o modal dialogo pequeno.
     activeTab.value = '1'; // Ativa a aba de cadastro
 }
 
@@ -258,5 +376,10 @@ function confirmDeleteMultiple() {
 <style scoped>
 .p-tab p-tab-active {
     padding: 0 !important;
+}
+label {
+    font-weight: 700;
+    font-size: 0.85em;
+    color: #64748b;
 }
 </style>
